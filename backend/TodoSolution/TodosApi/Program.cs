@@ -1,3 +1,4 @@
+using Marten;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,14 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var dataConnectionString = builder.Configuration.GetConnectionString("todos") ?? throw new Exception("Need a database connection string");
+builder.Services.AddMarten(options =>
+{
+    options.Connection(dataConnectionString);
+    Console.WriteLine($"Using the connection string {dataConnectionString}");
+    options.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.All; //good for development environment- creates enverything
+}); //add marten database without hard coding db info in the application
 
 //everything above this line is configuring "Services" in the application
 var app = builder.Build();
