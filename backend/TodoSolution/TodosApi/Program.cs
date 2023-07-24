@@ -1,5 +1,7 @@
 using Marten;
 using System.Text.Json.Serialization;
+using TodosApi;
+using TodosApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,8 @@ builder.Services.AddMarten(options =>
     Console.WriteLine($"Using the connection string {dataConnectionString}");
     options.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.All; //good for development environment- creates enverything
 }); //add marten database without hard coding db info in the application
+
+builder.Services.AddTransient<IManageTheTodoListCatalog, MartenTodoListCatalog>();
 
 //everything above this line is configuring "Services" in the application
 var app = builder.Build();

@@ -5,26 +5,25 @@ namespace TodosApi.Controllers
     [ApiController]
     public class TodoListController : ControllerBase
     {
-        private readonly IDocumentSession _documentSession;
-        public TodoListController(IDocumentSession documentSession)
+        private readonly IManageTheTodoListCatalog _todoListCatalog;
+
+        public TodoListController(IManageTheTodoListCatalog todoListCatalog)
         {
-            _documentSession = documentSession;
+            _todoListCatalog = todoListCatalog;
         }
 
         [HttpPost("/todo-list")]
         public async Task<ActionResult> AddTodoItem([FromBody] TodoListCreateModel request)
         {
-            var newItem = new TodoListItemResponseModel(Guid.NewGuid(), request.Description, TodoItemStatus.Later); //create new item with desc
-            _documentSession.Store(newItem); 
-            await _documentSession.SaveChangesAsync(); //store the new item and save changes in the database
-            return Ok(newItem); //send teh new item back
+
+            TodoListItemResponseModel response = await _todoListCatalog.AddTodoItemAsync(request);
+            return Ok(response); //send teh new item back
         }
 
         [HttpGet("/todo-list")]
         public async Task<ActionResult> GetTodoList()
         {
-            var list = await _documentSession.Query<TodoListItemResponseModel>().ToListAsync();
-            //var response = new CollectionResponse<TodoListItemResponseModel>(list);
+            CollectionResponse<TodoListItemResponseModel> list = await _todoListCatalog.GetFullListAsync();
             return Ok(list);
         }
     }

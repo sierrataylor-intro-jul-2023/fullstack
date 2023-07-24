@@ -6,5 +6,5 @@ POST http://localhost:8080/todo-list
 Content-Type: application/json
 
 {
-  "description": "Mow lawn"
+  "description": "Pet cat"
 }
