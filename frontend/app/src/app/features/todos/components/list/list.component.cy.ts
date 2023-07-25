@@ -71,12 +71,12 @@ describe(ListComponent.name, () => {
     });
   });
   describe('Interactions', () => {
-    let items: TodoListItemModel[] = [
-      { id: '1', description: 'tacos', status: 'Later' },
-      { id: '2', description: 'wash keyboard', status: 'Now' },
-    ];
-    describe('Cycling the status', () => {
+    describe('Cycling the Status', () => {
       it('Emits the output on click', () => {
+        let items: TodoListItemModel[] = [
+          { id: '1', description: 'Tacos', status: 'Later' },
+          { id: '2', description: 'Wash Keyboard', status: 'Now' },
+        ];
         cy.mount(ListComponent, {
           componentProperties: {
             list: items,
@@ -84,7 +84,7 @@ describe(ListComponent.name, () => {
           autoSpyOutputs: true,
         });
 
-        cy.get('li').first().find('button').click(); //find the button and click it
+        cy.get('li').first().find('button').click();
         cy.get('@onStatusCycledSpy').should(
           'have.been.calledOnceWith',
           items[0]

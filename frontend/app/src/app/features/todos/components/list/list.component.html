@@ -4,31 +4,19 @@
     class="p-4 border-2 border-black text-black"
     [ngClass]="{
       'bg-yellow-400': item.status === 'Later',
-      'bg-green-400': item.status === 'Now',
+      'bg-green-600': item.status === 'Now',
       'bg-orange-500': item.status === 'Waiting',
       'bg-slate-500': item.status === 'Completed'
     }"
   >
     <span class="text-2xl">{{ item.description }}</span>
     <button
-      class="ml-3 btn btn-sm btn-active btn-accent"
       (click)="cycleTheStatus(item)"
+      class="ml-3 btn btn-sm btn-active btn-accent"
     >
       {{ item.status }}
     </button>
   </li>
-  <!-- <li class="p-4 border-2 border-black bg-green-600 text-black">
-    <span class="text-2xl">Mow Lawn</span>
-    <button class="ml-3 btn btn-sm btn-active btn-accent">Now</button>
-  </li>
-  <li class="p-4 border-2 border-black bg-orange-500 text-black">
-    <span class="text-2xl">Pet Cat</span>
-    <button class="ml-3 btn btn-sm btn-active btn-accent">Waiting</button>
-  </li>
-  <li class="p-4 border-2 border-black bg-slate-500 text-black">
-    <span class="text-2xl">Fix Light</span>
-    <button class="ml-3 btn btn-sm btn-active btn-accent">Completed</button>
-  </li> -->
 </ul>
 <div
   *ngIf="list.length === 0"

@@ -35,16 +35,13 @@ describe(EntryComponent.name, () => {
     );
     it('Shows an error on empty entry', () => {
       cy.get('button[type="submit"]').click();
-      cy.get('@onItemAddedSpy').should('not.be.called', {
-        description: 'More Beer',
-      });
+      cy.get('@onItemAddedSpy').should('not.be.called');
       cy.get('[data-testid="error-alert"]').should('exist');
     });
     it('Shows an error on empty entry', () => {
       cy.get('input#description').type('{enter}');
-      cy.get('@onItemAddedSpy').should('not.be.called', {
-        description: 'More Beer',
-      });
+
+      cy.get('@onItemAddedSpy').should('not.be.called');
       cy.get('[data-testid="error-alert"]').should('exist');
     });
   });

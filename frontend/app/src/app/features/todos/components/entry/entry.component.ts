@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
+  FormControl,
   Validators,
 } from '@angular/forms';
-import { TodoListEntryModel } from '../../models/index';
+import { TodoListEntryModel } from '../../models';
 
 @Component({
   selector: 'app-entry',
@@ -24,6 +24,7 @@ export class EntryComponent {
       validators: [Validators.required, Validators.maxLength(100)],
     }),
   });
+
   itemAdded() {
     if (this.form.valid) {
       this.hasError.set(false);
