@@ -20,6 +20,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'counter',
+    loadChildren: () =>
+      import('./features/counter/counter.routes').then(
+        (routes) => routes.counterRoutes
+      ),
+  },
+  {
     path: '*',
     redirectTo: 'dashboard',
   },
