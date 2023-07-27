@@ -4,29 +4,41 @@ import {
   createSelector,
 } from '@ngrx/store';
 import * as fromTodoList from './todo-list.reducer';
+import * as fromUiHints from './ui-hints.reducer';
 import { TodoListItemModel } from '../models';
 export const FEATURE_NAME = 'todosFeature';
 
 export interface TodosState {
   todoList: fromTodoList.TodoListState;
+  uiHints: fromUiHints.UiHintsState;
 }
 
 export const reducers: ActionReducerMap<TodosState> = {
   todoList: fromTodoList.reducer,
+  uiHints: fromUiHints.reducer,
 };
 
-// 1. feature selector
+// 1. Feature Selector
+
 const selectFeature = createFeatureSelector<TodosState>(FEATURE_NAME);
 
-// 2. selector per branch of the feature
-const selectTodoListBranch = createSelector(selectFeature, (f) => f.todoList);
+// 2. Selector per branch of the feature
 
-// 3. helper (will return a todo list item array)
+const selectTodoListBranch = createSelector(selectFeature, (f) => f.todoList);
+const selectUiHints = createSelector(selectFeature, (f) => f.uiHints);
+
+// 3. Helpers
+
 const { selectAll: selectTodoListItemArray } =
   fromTodoList.adapter.getSelectors(selectTodoListBranch);
 
-// 4. what the component needs
-//TODO: one that returns a TodoListItemModel[]
+// 4. What the component needs.
+
+export const selectTodoListLoaded = createSelector(
+  selectUiHints,
+  (h) => h.todoListLoaded
+);
+
 export const selectTodoListModel = createSelector(
   selectTodoListItemArray,
   (items) => items as TodoListItemModel[]

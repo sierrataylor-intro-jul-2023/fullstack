@@ -1,16 +1,12 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from './pages/dashboard.component';
 import { AboutComponent } from './pages/about.component';
-import { TodosComponent } from './features/todos/todos.component';
+import { counterRoutes } from './features/counter/counter.routes';
 
-export const routes: Routes = [
+const appRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-  },
-  {
-    path: 'about',
-    component: AboutComponent,
   },
   {
     path: 'todos',
@@ -19,15 +15,17 @@ export const routes: Routes = [
         (routes) => routes.todosRoutes
       ),
   },
+];
+
+const redirectRoutes: Routes = [
   {
-    path: 'counter',
-    loadChildren: () =>
-      import('./features/counter/counter.routes').then(
-        (routes) => routes.counterRoutes
-      ),
-  },
-  {
-    path: '*',
+    path: '**',
     redirectTo: 'dashboard',
   },
+];
+
+export const routes: Routes = [
+  ...counterRoutes,
+  ...appRoutes,
+  ...redirectRoutes,
 ];

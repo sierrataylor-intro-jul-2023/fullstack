@@ -19,12 +19,10 @@ var dataConnectionString = builder.Configuration.GetConnectionString("todos") ??
 builder.Services.AddMarten(options =>
 {
     options.Connection(dataConnectionString);
-    Console.WriteLine($"Using the connection string {dataConnectionString}");
     options.AutoCreateSchemaObjects = Weasel.Core.AutoCreate.All; //good for development environment- creates enverything
 }); //add marten database without hard coding db info in the application
 
 builder.Services.AddTransient<IManageTheTodoListCatalog, MartenTodoListCatalog>();
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(pol =>
@@ -34,6 +32,8 @@ builder.Services.AddCors(options =>
         pol.AllowAnyHeader();
     });
 });
+builder.Services.AddTransient<IProvideStatusCycling, StatusCycler>();
+
 
 //everything above this line is configuring "Services" in the application
 var app = builder.Build();

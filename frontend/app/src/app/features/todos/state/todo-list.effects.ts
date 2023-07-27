@@ -6,11 +6,11 @@ import { mergeMap, switchMap } from 'rxjs';
 import { TodoListItem } from './todo-list.reducer';
 import { map } from 'rxjs';
 import { TodoDocuments, TodosEvents } from './todos.actions';
-import { environment } from 'src/environments/environment';
-
+import { environment } from '../../../../environments/environment';
 @Injectable()
 export class TodoListEffects {
   // When the feature is entered, go to the API, get the the todo list, and turn into a action with the items.
+
   private readonly API_URL = environment.apiUrl;
   loadItems$ = createEffect(() => {
     return this.actions$.pipe(
@@ -26,7 +26,8 @@ export class TodoListEffects {
     );
   });
 
-  //TodoEvents.itemAdded -> API_CALL
+  // TodoEvents.itemAdded -> (API CALL) -> TodoDocuments.todo
+
   saveTodo$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(TodosEvents.itemAdded),
@@ -38,6 +39,19 @@ export class TodoListEffects {
     );
   });
 
+  cycleStatus$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(TodosEvents.itemStatusCycled),
+      mergeMap(({ payload }) =>
+        this.httpClient
+          .post<TodoListItem>(
+            this.API_URL + 'todos-list-status-change',
+            payload
+          )
+          .pipe(map((payload) => TodoDocuments.todo({ payload })))
+      )
+    );
+  });
   constructor(
     private readonly actions$: Actions,
     private readonly httpClient: HttpClient

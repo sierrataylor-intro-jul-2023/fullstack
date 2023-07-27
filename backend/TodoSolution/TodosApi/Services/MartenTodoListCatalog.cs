@@ -23,12 +23,16 @@ namespace TodosApi.Services
 
         public async Task<TodoListItemResponseModel?> ChangeStatusAsync(TodoListItemRequestModel request)
         {
-            var savedItem = await _session.Query<TodoListItemResponseModel>().Where(t => t.Id == request.Id).SingleOrDefaultAsync();
+            var savedItem = await _session
+                 .Query<TodoListItemResponseModel>()
+                 .Where(t => t.Id == request.Id).SingleOrDefaultAsync();
             if (savedItem == null)
             {
                 return null;
             }
             TodoListItemResponseModel updated = _statusCycler.ProvideNextStatusFrom(savedItem);
+            _session.Store(updated);
+            await _session.SaveChangesAsync();
             return updated;
         }
 

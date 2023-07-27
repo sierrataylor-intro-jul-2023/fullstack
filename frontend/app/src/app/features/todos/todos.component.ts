@@ -6,7 +6,7 @@ import { TodoListEntryModel, TodoListItemModel } from './models';
 import { Store } from '@ngrx/store';
 import { FeatureEvents } from './state/feature.actions';
 import { TodosEvents } from './state/todos.actions';
-import { selectTodoListModel } from './state';
+import { selectTodoListLoaded, selectTodoListModel } from './state';
 
 @Component({
   selector: 'app-todos',
@@ -18,11 +18,12 @@ import { selectTodoListModel } from './state';
 export class TodosComponent {
   // This is going to have to come from an API
   // We'll do that tomorrow.
-
+  todoListLoaded = this.store.selectSignal(selectTodoListLoaded);
   constructor(private readonly store: Store) {
     store.dispatch(FeatureEvents.featureEntered());
   }
   todoList = this.store.selectSignal(selectTodoListModel);
+
   addItem(candidate: TodoListEntryModel) {
     this.store.dispatch(TodosEvents.itemAdded({ payload: candidate }));
   }
