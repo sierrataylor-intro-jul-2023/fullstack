@@ -44,10 +44,7 @@ export class TodoListEffects {
       ofType(TodosEvents.itemStatusCycled),
       mergeMap(({ payload }) =>
         this.httpClient
-          .post<TodoListItem>(
-            this.API_URL + 'todos-list-status-change',
-            payload
-          )
+          .post<TodoListItem>(this.API_URL + 'todo-list-status-change', payload)
           .pipe(map((payload) => TodoDocuments.todo({ payload })))
       )
     );

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { HeaderComponent } from "../components/header.component";
 
 @Component({
-    standalone: true,
-    selector: 'app-dashboard',
     templateUrl: "./dashboard.component.html",
-    imports: [HeaderComponent]
+    selector: 'app-dashboard',
+    standalone: true
 })
-export class DashboardComponent {};
+export class DashboardComponent {
+
+}

@@ -6,10 +6,10 @@ import { selectCounterCurrent } from '../features/counter/state';
   standalone: true,
   selector: 'app-header',
   template: `
-    <header class="p-4 border-2 border-black">
-      <h1 class="text-3xl text-primary font-mono">Intro to Programming</h1>
+    <header class="p-4 border-b-2 border-black">
+      <h1 class="text-4xl text-primary font-black">Intro to Programming</h1>
       <p>
-        Sample Full-Stack Application For Class!!!
+        Sample Full-Stack Application For The Training Class
         <small>Your Counter is at {{ current() }}</small>
       </p>
     </header>
@@ -17,4 +17,5 @@ import { selectCounterCurrent } from '../features/counter/state';
 })
 export class HeaderComponent {
   current = inject(Store).selectSignal(selectCounterCurrent);
+  // current = signal(3); // TODO: JEFF WILL FIX THIS LATER HE PROMISES
 }

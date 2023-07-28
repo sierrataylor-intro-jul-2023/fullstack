@@ -9,6 +9,10 @@ const appRoutes: Routes = [
     component: DashboardComponent,
   },
   {
+    path: 'about',
+    component: AboutComponent,
+  },
+  {
     path: 'todos',
     loadChildren: () =>
       import('./features/todos/todos.routes').then(

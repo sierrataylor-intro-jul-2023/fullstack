@@ -7,8 +7,11 @@ import { CounterEffects } from './state/counter.effects';
 
 export const counterRoutes: Routes = [
   {
-    path: 'counter',
+    path: '',
     component: CounterComponent,
-    providers: [provideEffects([CounterEffects])],
+    providers: [
+      provideState(FEATURE_NAME, reducers),
+      provideEffects([CounterEffects]),
+    ],
   },
 ];
